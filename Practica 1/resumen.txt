@@ -1,0 +1,105 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+	Temperatura REAL := &temp;
+	Escala CHAR := &esc;
+    tcalculada REAL;
+BEGIN
+
+	IF Escala = 'C' THEN
+		tcalculada := (9/5)*Temperatura+32;
+		dbms_output.put_line('La temperatura en Farenheit es: ' || tcalculada);
+	ELSIF Escala = 'F' THEN
+		tcalculada := (5/9)*Temperatura-32;
+		dbms_output.put_line('La temperatura en Celcius es: ' || tcalculada);
+    ELSE
+        dbms_output.put_line('ERROR: ESCALA NO ACEPTADA'); 
+    END IF;
+EXCEPTION WHEN OTHERS THEN
+    dbms_output.put_line('ERROR: EXCEPCION'); 
+	
+END;
+
+-----------------------------------------------------------------------------------------------
+Importante, LAS VARIABLES DE SUSTITUCIÓN SON &loquesea como aqui "Temperatura REAL := &temp;" realiza la funcion de scanf
+Lo demas es mas sintaxis que otra cosa :)
+
+
+
+-----------------------------------------EJ2----------------------------------------------------------------------------------
+
+
+Bloque 1: 
+	Salida obtenida: v_num is not greater than 0
+	
+	Esto sucede debido a que NULL no es mayor que 0, es más, no es 0 ni un tipo Numerico. null no puede ser mayor/igual/menor que nada.
+
+Bloque 2:
+	Salida obtenida: (vacia)
+
+	Esto es debido a que, primero se está comprobando si v_num (NULL) es mayor que 0, y luego se esta comprobando si v_num (NULL) NO es mayor que 0 (es decir, que es menor o igual a 0). Llegando a la conclusion del apartado anterior.
+
+
+
+-----------------------------------------EJ3----------------------------------------------------------------------------------
+--Autores: Adriana Maña Watson | Francisco Javier Molina Rojas
+
+CREATE TABLE Inventario 
+(
+    NombreArt VARCHAR(15),
+    NumExistencias INT,
+    FechaUltAct DATE
+);
+    
+CREATE TABLE ControlVentas
+(
+    Nombreart VARCHAR(15),
+    UnidVendidas INT,
+    FechaVenta DATE,
+    Comentario CHAR
+);
+    
+INSERT INTO Inventario VALUES
+(
+    'Galletas',
+    24,
+    TO_DATE('2023-01-21', 'YYYY-MM-DD')
+);
+  
+INSERT INTO Inventario VALUES
+(
+    'Pelota',
+    0,
+    TO_DATE('2023-01-10', 'YYYY-MM-DD')
+);
+    
+INSERT INTO ControlVentas VALUES
+(
+    'Galletas',
+    6,
+    TO_DATE('2022-12-30', 'YYYY-MM-DD'),
+    'S'
+);
+    
+INSERT INTO ControlVentas VALUES
+(
+    'Pelota',
+    1,
+    TO_DATE('2023-01-15', 'YYYY-MM-DD'),
+    'S'
+);    
+
+DECLARE
+    articulo VARCHAR(15) := &art;
+    uds INT := &uds;
+BEGIN
+    SELECT NombreArt,NumExistencias,FechaUltAct
+    FROM Inventario
+    WHERE NombreArt = articulo AND NumExistencias >= uds
+    
+
+END;
+/
+
+
+
