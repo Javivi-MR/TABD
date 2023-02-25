@@ -4,6 +4,7 @@ DECLARE
 	Temperatura REAL := &temp;
 	Escala CHAR := &esc;
     tcalculada REAL;
+    
 BEGIN
 
 	IF Escala = 'C' THEN
