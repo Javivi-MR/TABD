@@ -1,0 +1,11 @@
+Autores: Adriana Maña Watson | Francisco Javier Molina Rojas
+
+Bloque 1: 
+	Salida obtenida: v_num is not greater than 0
+	
+	Esto sucede debido a que NULL no es mayor que 0, es más, no es 0 ni un tipo Numerico. null no puede ser mayor/igual/menor que nada.
+
+Bloque 2:
+	Salida obtenida: (vacia)
+
+	Esto es debido a que, primero se está comprobando si v_num (NULL) es mayor que 0, y luego se esta comprobando si v_num (NULL) NO es mayor que 0 (es decir, que es menor o igual a 0). Llegando a la conclusion del apartado anterior.
