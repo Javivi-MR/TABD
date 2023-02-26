@@ -1,4 +1,5 @@
 --Autores: Adriana Maña Watson | Francisco Javier Molina Rojas
+
 SET SERVEROUTPUT ON;
 
 CREATE TABLE Inventario  --Creacion tabla Inventario --
