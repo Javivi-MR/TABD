@@ -2,7 +2,9 @@
 
 SET SERVEROUTPUT ON; -- Habilitamos el output
 
+
 -- <------ Definicion de las Tablas ------> --
+/*
 CREATE TABLE CUENTAS  --Creamos tabla CUENTAS
 (
     IDCuenta NUMBER(4), --IDCuenta es un numero de 4 cifras como mucho
@@ -14,11 +16,11 @@ CREATE TABLE ACCIONES
 (
     IdCuenta NUMBER(4), --IDCuenta es un numero de 4 cifras como mucho
     TipoOp CHAR(1), --TipoOp sera la operación a realizar
-    NuevoValor NUMBER(11,2), --Nuevo Valor será el valor a tomar
-    Estado VARCHAR(45), --Estado será el estado de la cuenta
-    FechaMod DATE  --FechaMod será la fecha de cuando se realizo la operación
+    ACCEPT NuevoValor NUMBER(11,2), --Nuevo Valor será el valor a tomar
+    ACCEPT Estado VARCHAR(45), --Estado será el estado de la cuenta
+    ACCEPT FechaMod DATE  --FechaMod será la fecha de cuando se realizo la operación
 );
-
+*/
 
 -- <------ FIN definicion de las Tablas ------> --
 
@@ -93,14 +95,14 @@ BEGIN
         
         /* Si la excepcion se levantase, no continuariamos mas allá de esta linea */
     
-        INSERT INTO ACCIONES VALUES(IDC,Operacion,ValorNuevo,'Se Borro la cuenta con exito',SYSDATE); -- Guardamos la operacion realizada en la tabla ACCIONES
+        INSERT INTO ACCIONES VALUES(IDC,Operacion,NULL,'Se Borro la cuenta con exito',SYSDATE); -- Guardamos la operacion realizada en la tabla ACCIONES
         
     -- <-- FIN bloque para la operacion Borrar Cuenta --> --
     
     -- <-- En el caso que la operacion no fuese alguna de las anteriores --> --
     
     ELSE  
-        raise OperacionDesconocidad; -- Levantamos la excepcion de OperacionDesconocidad
+        raise OperacionDesconocida; -- Levantamos la excepcion de OperacionDesconocidad
     END IF;
 
 -- <-- FIN del cuerpo del script --> --
@@ -134,11 +136,11 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error al borrar, la cuenta no existe'); -- Mostramos mensaje de error
     -- <-- FIN caso excepcion BorrarCuentaNoExiste (Borrar una tupla con id de cuenta que no existe) --> --
         
-    -- <-- Caso excepcion OperacionDesconocidad (Operacion desconocida) --> --
-    WHEN OperacionDesconocidad THEN
+    -- <-- Caso excepcion OperacionDesconocida (Operacion desconocida) --> --
+    WHEN OperacionDesconocida THEN
         /* En este caso no es necesario hacer nada */
         DBMS_OUTPUT.PUT_LINE('Error, la operacion solicitada no existe. Ningun cambio será realizado'); -- Mostramos mensaje de error
-    -- <-- FIN caso excepcion OperacionDesconocidad (Operacion desconocida) --> --
+    -- <-- FIN caso excepcion OperacionDesconocida (Operacion desconocida) --> --
     
 -- <-- FIN comienzo de tratamiento de excepciones --> --
 
