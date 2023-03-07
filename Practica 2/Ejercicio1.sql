@@ -4,7 +4,7 @@
 
 SET SERVEROUTPUT ON;
 
-/*
+
 CREATE TABLE CUENTAS  --Creamos tabla CUENTAS
 (
     IDCuenta NUMBER(4), --IDCuenta es un numero de 4 cifras como mucho
@@ -18,10 +18,9 @@ CREATE TABLE ACCIONES
     TipoOp CHAR(1), --TipoOp sera la operación a realizar
     NuevoValor NUMBER(11,2), --Nuevo Valor será el valor a tomar
     Estado VARCHAR(45), --Estado será el estado de la cuenta
-    FechaMod DATE,  --FechaMod será la fecha de cuando se realizo la operación
-    CONSTRAINT fk_cuenta FOREIGN KEY (IdCuenta) REFERENCES CUENTAS(IDCuenta) -- Definimos una clave foranea
+    FechaMod DATE  --FechaMod será la fecha de cuando se realizo la operación
 );
-*/
+
 
 -- <------ FIN definicion de las Tablas ------> --
 
@@ -29,76 +28,75 @@ CREATE TABLE ACCIONES
 
 DECLARE
 -- <- Variables -> --
-    Idcuenta NUMBER(4) := &id;
-    Operacion CHAR(1) := &op;
+    IDC NUMBER(4) := &id;
+    Operacion CHAR(1) := '&op';
     ValorNuevo NUMBER(11,2) := &vn;
-    Comentario VARCHAR(45) := &c;
+    Comentario VARCHAR(45) := '&c';
     
 -- <- Fin Variables -> -- 
     
 -- <- Excepciones -> --
-    CuentaYaExiste EXCEPTION;
     CuentaNoExiste EXCEPTION;
     BorrarCuentaNoExiste EXCEPTION;
 -- <- Fin Excepciones -> --
     
 BEGIN
     IF Operacion = 'i' OR Operacion = 'I' THEN
+        INSERT INTO CUENTAS VALUES(IDC,ValorNuevo);
+        INSERT INTO ACCIONES VALUES(IDC,Operacion,ValorNuevo,'Se inserto la cuenta con exito',SYSDATE);
+        
+    ELSIF Operacion = 'a' OR Operacion = 'A' THEN
+        UPDATE CUENTAS
+        SET Valor = ValorNuevo
+        WHERE IDCuenta = IDC;
+        
+        IF SQL%ROWCOUNT = 0 THEN
+            RAISE CuentaNoExiste;
+        END IF;
+        
+        INSERT INTO ACCIONES VALUES(IDC,Operacion,ValorNuevo,'Se actualizo la cuenta con exito',SYSDATE);
+        
+    ELSIF Operacion = 'b' OR Operacion = 'B' THEN
+        DELETE FROM CUENTAS
+        WHERE IDCuenta = IDC;
+        
+        IF SQL%ROWCOUNT = 0 THEN
+            RAISE BorrarCuentaNoExiste;
+        END IF;
+    
+        INSERT INTO ACCIONES VALUES(IDC,Operacion,ValorNuevo,'Se Borro la cuenta con exito',SYSDATE);
+    
+    END IF;
+
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        DBMS_OUTPUT.PUT_LINE('Error al insertar, ya existe la cuenta. Procedemos a actualizarla');
+        
+        UPDATE CUENTAS
+        SET Valor = ValorNuevo
+        WHERE IDCuenta = IDC;
+        
+        INSERT INTO ACCIONES VALUES(IDC,Operacion,ValorNuevo,'Se actualizo la cuenta con exito',SYSDATE);
+        
+        
+    WHEN BorrarCuentaNoExiste THEN 
+        DBMS_OUTPUT.PUT_LINE('Error al borrar, la cuenta no existe');
+        
+    WHEN CuentaNoExiste THEN
+
+        DBMS_OUTPUT.PUT_LINE('Error al actualizar, la cuenta no existe. Procedemos a insertarla');
         INSERT INTO CUENTAS VALUES
         (
-            idcuenta,
+            IDC,
             ValorNuevo
         );
-        
         INSERT INTO ACCIONES VALUES
         (
-            Idcuenta,
+            IDC,
             Operacion,
             ValorNuevo,
             'Se inserto la cuenta con exito',
             SYSDATE
         );
-        
-    ELSIF Operacion = 'a' OR Operacion = 'A' THEN
-        UPDATE CUENTAS
-        SET Valor = ValorNuevo
-        where IDCuenta = Idcuenta;
-        
-        INSERT INTO ACCIONES VALUES
-        (
-            Idcuenta,
-            Operacion,
-            ValorNuevo,
-            'Se actualizo la cuenta con exito',
-            SYSDATE
-        );
-        
-    END IF;
-
-EXCEPTION
-    WHEN DUP_VAL_ON_INDEX THEN
-        DBMS_OUTPUT.PUT_LINE('Datos no insertados');
-    WHEN NO_DATA_FOUND THEN 
-        DBMS_OUTPUT.PUT_LINE('Datos no actualizados');
-    WHEN OTHERS THEN
-        IF SQLCODE = -2291 THEN
-            -- El codigo -2291 se corresponde con la excepcion ORA-02291: Intento de acceder a una clave foranea la cual no tiene una clave primaria coincidente
-            -- Para mas informacion: https://docs.oracle.com/en/database/oracle/oracle-database/21/errmg/ORA-02100.html#GUID-008ABD32-275E-467A-AE6B-04976F2A8462
-            DBMS_OUTPUT.PUT_LINE('Error al actualizar, la cuenta no existe. Procedemos a insertarla');
-            INSERT INTO CUENTAS VALUES
-            (
-                idcuenta,
-                ValorNuevo
-            );
-            INSERT INTO ACCIONES VALUES
-            (
-                Idcuenta,
-                Operacion,
-                ValorNuevo,
-                'Se inserto la cuenta con exito',
-                SYSDATE
-            );           
-            -- AQUI
-        END IF;
 END;
 /
