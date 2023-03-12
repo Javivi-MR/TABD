@@ -1,0 +1,10 @@
+Tenemos 2 resoluciones del ejercicio:
+
+    En ejercicio1.sql tenemos el ejercicio junto a mensajes de error para cada tipo de excepción y diferenciando los casos.
+    Sin embargo existe varias lineas de codigo que están repetidas, provocando que sea más largo.
+
+    En Ejercicio1.2.sql tenemos el ejercicio simplificado, sin tener que repetir lineas de codigo. Esto se explica debido a que
+    podemos encontrar una relacion entre las operaciones insertar y actualizar. En este caso intentamos siempre actualizar una cuenta
+    (ya sea operacion insertar o actualizar). Si se actualiza es porque ya existia, si no se actualiza, ninguna fila es afectada por lo que
+    deberemos insertarla como hacemos en la excepcion "CuentaNoExiste".
+    Con esto evitamos la repeticion de codigo haciendolo mas compácto.
