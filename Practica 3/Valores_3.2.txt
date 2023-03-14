@@ -1,0 +1,208 @@
+-- Insercion de Datos
+
+
+INSERT INTO Cursos VALUES 
+( 	
+	1,
+	'Matematicas',
+	'Blablam',
+	100,
+	25
+);
+INSERT INTO Cursos VALUES 
+(
+	2,
+	'Lengua',
+	'Blablal',
+	100,
+	25
+);
+INSERT INTO Cursos VALUES 
+(
+	3,
+	'Ingles',
+	'Blablai',
+	100,
+	25
+);
+
+INSERT INTO Alumnos VALUES 
+( 	
+	1,
+	'Aaron',
+	'Sanchez Sanchez'
+);
+INSERT INTO Alumnos VALUES 
+( 	
+	2,
+	'Maria',
+	'Cuadrado Sanchez'
+);
+INSERT INTO Alumnos VALUES 
+( 	
+	3,
+	'Isabel',
+	'Becerra Losada'
+);
+INSERT INTO Alumnos VALUES 
+( 	
+	4,
+	'Adriana',
+	'Mana Watson'
+);
+INSERT INTO Alumnos VALUES 
+( 	
+	5,
+	'Javier',
+	'Molinas Rojas'
+);
+
+
+INSERT INTO Edicion VALUES 
+( 	
+	1,
+	1,
+	TO_DATE('2023-10-10', 'YYYY-MM-DD'),
+	TO_DATE('2023-12-10', 'YYYY-MM-DD'),
+	'Cadiz'
+);
+INSERT INTO Edicion VALUES 
+( 	
+	1,
+	2,
+	TO_DATE('2024-01-10', 'YYYY-MM-DD'),
+	TO_DATE('2024-03-10', 'YYYY-MM-DD'),
+	'Cadiz'
+);
+INSERT INTO Edicion VALUES 
+( 	
+	2,
+	1,
+	TO_DATE('2023-10-10', 'YYYY-MM-DD'),
+	TO_DATE('2023-12-10', 'YYYY-MM-DD'),
+	'Jerez'
+);
+INSERT INTO Edicion VALUES 
+( 	
+	2,
+	2,
+	TO_DATE('2024-01-10', 'YYYY-MM-DD'),
+	TO_DATE('2024-03-10', 'YYYY-MM-DD'),
+	'Jerez'
+);
+INSERT INTO Edicion VALUES 
+( 	
+	3,
+	1,
+	TO_DATE('2023-10-10', 'YYYY-MM-DD'),
+	TO_DATE('2023-12-10', 'YYYY-MM-DD'),
+	'Rota'
+);
+INSERT INTO Edicion VALUES 
+( 	
+	3,
+	2,
+	TO_DATE('2024-01-10', 'YYYY-MM-DD'),
+	TO_DATE('2024-03-10', 'YYYY-MM-DD'),
+	'Rota'
+);
+
+INSERT INTO Matricula VALUES 
+( 	
+	1,1,1,TO_DATE('2023-09-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,2,1,TO_DATE('2023-12-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,1,2,TO_DATE('2023-09-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,2,2,TO_DATE('2023-12-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,1,3,TO_DATE('2023-09-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,2,3,TO_DATE('2023-12-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,1,4,TO_DATE('2023-09-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,2,4,TO_DATE('2023-12-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,1,5,TO_DATE('2023-09-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	1,2,5,TO_DATE('2023-12-30', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,1,1,TO_DATE('2023-09-19', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,2,1,TO_DATE('2023-12-29', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,1,2,TO_DATE('2023-09-19', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,1,3,TO_DATE('2023-09-19', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,1,4,TO_DATE('2023-09-19', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	2,1,5,TO_DATE('2023-09-19', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,1,1,TO_DATE('2023-09-29', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,2,1,TO_DATE('2023-12-28', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,1,2,TO_DATE('2023-09-29', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,2,2,TO_DATE('2023-12-28', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,1,3,TO_DATE('2023-09-29', 'YYYY-MM-DD')
+);
+INSERT INTO Matricula VALUES 
+( 	
+	3,1,4,TO_DATE('2023-09-29', 'YYYY-MM-DD')
+);
+
+-- Final de Insercion de Datos
+
+-- 1,1 5 personas
+-- 1,2 5 personas
+
+-- 2,1 5 personas
+-- 2,2 1 persona
+
+-- 3,1 4 personas
+-- 3,2 2 personas
