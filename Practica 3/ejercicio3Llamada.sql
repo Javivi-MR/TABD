@@ -9,8 +9,14 @@ BEGIN
     
     PaqueteCursos.Descontar(n2); -- Llamamos al procedimiento descontar del paquete PaqueteCursos
     
-    n1 := PaqueteCursos.NUM_ALUM(c1); -- Llamamos a la funcion NUM_ALUM del paquete PaqueteCursos
+    n1 := PaqueteCursos.NUM_ALUM(c1,e); -- Llamamos a la funcion NUM_ALUM del paquete PaqueteCursos
     
-    DBMS_OUTPUT.PUT_LINE('Curso: ' || c1 || 'EDICION: '); -- Mostramos el curso y la edicion
+    DBMS_OUTPUT.PUT_LINE('Curso: ' || c1 || ' EDICION: ' || e); -- Mostramos el curso y la edicion
     DBMS_OUTPUT.PUT_LINE('Numero de alumnos: ' || n1); -- Mostramos el numero de alumnos
+    
+EXCEPTION
+    WHEN VALUE_ERROR THEN  -- Excepcion para cuando el valor asignado al codigo del curso o codigo edicion sea incorrecto
+        DBMS_OUTPUT.PUT_LINE('Error de asignacion, por favor introduce un numero ');   
+    WHEN OTHERS THEN -- Excepcion de cualquier tipo
+        DBMS_OUTPUT.PUT_LINE('Error no identificado');
 END;

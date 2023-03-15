@@ -44,6 +44,6 @@ EXCEPTION
     WHEN VALUE_ERROR THEN  -- Excepcion para cuando el valor asignado al codigo del curso sea incorrecto
         DBMS_OUTPUT.PUT_LINE('Error de asignacion, por favor introduce un numero ');   
         
-    WHEN NO_DATA_FOUND THEN
+    WHEN NO_DATA_FOUND THEN --Excepcion para cuando el curso seleccionado no existe
         DBMS_OUTPUT.PUT_LINE('Error, el curso seleccionado no existe');   
 END;

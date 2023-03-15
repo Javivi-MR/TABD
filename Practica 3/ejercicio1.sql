@@ -12,4 +12,7 @@ BEGIN
             HAVING COUNT(COD_ALUMNO) < n -- Donde el numero de alumnos sea menor que el entero proporcionado
             GROUP BY COD_CURSO,COD_EDICION -- Agrupamos por codigo de curso y codigo de edicion
          );
+EXCEPTION
+    WHEN OTHERS THEN -- Si se procude una excepcion de cualquier tipo
+        DBMS_OUTPUT.PUT_LINE('Error al actualizar la tabla Matricula');
 END;

@@ -15,4 +15,10 @@ BEGIN -- Comienza la funcion
     GROUP BY COD_CURSO,COD_EDICION; -- Lo agrupamos por COD_CURSO y COD_EDICION, con el objetivo de contar los alumnos por curso y edicion
     
     RETURN Total; -- Devolvemos el total
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN -- Cuando no se encuentre datos 
+        RETURN 0;
+    WHEN OTHERS THEN  -- Si se procude una excepcion de cualquier tipo
+        DBMS_OUTPUT.PUT_LINE('Error al obtener el numero de alumnos');
 END;

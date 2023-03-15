@@ -1,4 +1,3 @@
--- Definicion del paquete
 CREATE OR REPLACE PACKAGE PaqueteCursos AS
     --Definicion del procedimiento
     PROCEDURE Descontar(n IN INTEGER);
@@ -8,11 +7,9 @@ CREATE OR REPLACE PACKAGE PaqueteCursos AS
 END;
 /
 
--- Definicion del cuerpo del paquete
--- Para consultar documentacion del codigo, consultar Practica 3\ejercicio1.sql & Practica 3\Ejercicio2.sql
+-- Para mas informacion acerca del procedimiento y la funcion consulte Ejercicio1.sql & Ejercicio2.sql
 CREATE OR REPLACE PACKAGE BODY PaqueteCursos AS
     
-    -- Definicion del procedimiento
     PROCEDURE Descontar(n IN INTEGER)AS 
     BEGIN
         UPDATE CURSOS
@@ -24,19 +21,27 @@ CREATE OR REPLACE PACKAGE BODY PaqueteCursos AS
                 HAVING COUNT(COD_ALUMNO) < n
                 GROUP BY COD_CURSO,COD_EDICION
              );
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('Error al actualizar la tabla Matricula');
     END;
     
-    -- Definicion de la funcion
     FUNCTION NUM_ALUM (C_Curso IN CURSOS.COD_CURSO%TYPE, C_Edicion IN EDICION.COD_EDICION%TYPE) RETURN INTEGER AS 
     Total INTEGER;
-    BEGIN 
-        select count(COD_ALUMNO) 
+    BEGIN
+        select count(COD_ALUMNO)
         INTO Total 
         FROM MATRICULA 
         WHERE COD_CURSO = C_Curso AND COD_EDICION = C_Edicion 
         GROUP BY COD_CURSO,COD_EDICION; 
         
         RETURN Total;
+
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 0;
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('Error al obtener el numero de alumnos');
     END;
 END;
 /
