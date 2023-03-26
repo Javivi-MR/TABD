@@ -1,3 +1,4 @@
+--Autores: Francisco Javier Molina Rojas | Adriana Maña Watson
 -- Script para probar el trigger
 BEGIN
     INSERT INTO EMPLEADOS (NOMBREEMPLEADO,SUELDOEMPLEADO) VALUES ('Adriana',1000);

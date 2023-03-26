@@ -1,9 +1,10 @@
+--Autores: Francisco Javier Molina Rojas | Adriana Maña Watson
 CREATE OR REPLACE TRIGGER EmpleadosDisp  --Creamos trigger
 AFTER INSERT OR UPDATE OR DELETE ON EMPLEADOS FOR EACH ROW  --Despues de que se inserte, actualice o se borre un registro de la tabla empleados 
 DECLARE
     usuario VARCHAR2(50); --Variable para almacenar el usuario que posee la sesion
 BEGIN
-    SELECT USER INTO usuario FROM DUAL; --DUAL es una tabla especial de Oracle que contiene una sola fila y una sola columna con el nombre del usuario con sesion actual
+    usuario := USER; --USER es una funcion que devuelve el nombre del usuario que posee la sesion actual ya implementada en Oracle
 
     IF INSERTING THEN --Cuando se inserte una fila:
         INSERT INTO ACCIONES (IDENTIFICADOR,NOMBREUSUARIO,HORAMODIFICACION,ACCIONREALIZADA,FILAAFECTADA) VALUES (CODACC.NEXTVAL,usuario,TO_CHAR(SYSDATE,'HH24:MI:SS'),'INSERT',:NEW.CODIGOEMPLEADO); -- Insertamos en la tabla acciones los datos de la fila insertada ademas de los datos de la sesion actual, la hora actual y la accion realizada
@@ -29,5 +30,11 @@ BEGIN
         END IF; 
     END IF;
     
+EXCEPTION -- Apartado de excepciones
+    -- Al tratarse de un trigger con solo operaciones insert, no existen muchas excepciones que se puedan dar.
+    -- por lo que decidimos que si se produce una excepcion no esperada, se muestre un mensaje de error.
+    WHEN OTHERS THEN    -- Cuando ocurra una excepcion no esperada 
+        DBMS_OUTPUT.PUT_LINE('Ha ocurrido un error, revisa tu operacion y comprueba que los datos son correctos'); --Mostramos un mensaje de error
+
 END;
 /

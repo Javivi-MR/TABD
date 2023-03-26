@@ -1,3 +1,4 @@
+--Autores: Francisco Javier Molina Rojas | Adriana Maña Watson
 -- Creacion de secuencias --
 
 CREATE SEQUENCE codemp --Creamos secuencia para el codigo de empleado

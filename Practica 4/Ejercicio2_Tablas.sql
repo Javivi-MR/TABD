@@ -1,3 +1,4 @@
+--Autores: Francisco Javier Molina Rojas | Adriana Maña Watson
 -- creacion de tablas --
 
 CREATE TABLE EMPLEADOS
