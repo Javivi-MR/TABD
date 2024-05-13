@@ -1,0 +1,75 @@
+CREATE (me:Person {name: "Philip"}) RETURN me;
+CREATE (me:Person {name: "Mark"}) RETURN me;
+CREATE (me:Person {name: "Bruno"}) RETURN me;
+
+CREATE (res:Restaurant {name: "Zushi Zam"}) RETURN res;
+CREATE (res:Restaurant {name: "iSushi"}) RETURN res;
+
+CREATE (di:Dish {cuisine: "Sushi"}) RETURN di;
+
+CREATE (ci:City {name: "New York"}) RETURN ci;
+
+--relationships
+-- Philip is friend of Mark
+MATCH (a:Person),(b:Person) WHERE a.name = "Philip" AND b.name = "Mark" CREATE (a)-[r:IS_FRIEND_OF]->(b) RETURN r;
+-- Philip is friend of Bruno
+MATCH (a:Person),(b:Person) WHERE a.name = "Philip" AND b.name = "Bruno" CREATE (a)-[r:IS_FRIEND_OF]->(b) RETURN r;
+
+
+-- Mark likes Zushi Zam
+MATCH (a:Person),(b:Restaurant) WHERE a.name = "Mark" AND b.name = "Zushi Zam" CREATE (a)-[r:LIKES]->(b) RETURN r;
+-- Bruno likes iSushi
+MATCH (a:Person),(b:Restaurant) WHERE a.name = "Bruno" AND b.name = "iSushi" CREATE (a)-[r:LIKES]->(b) RETURN r;
+
+-- Zushi Zam serves Sushi
+MATCH (a:Restaurant),(b:Dish) WHERE a.name = "Zushi Zam" AND b.cuisine = "Sushi" CREATE (a)-[r:SERVES]->(b) RETURN r;
+-- iSushi serves Sushi
+MATCH (a:Restaurant),(b:Dish) WHERE a.name = "iSushi" AND b.cuisine = "Sushi" CREATE (a)-[r:SERVES]->(b) RETURN r;
+
+-- Zushi Zam is in New York
+MATCH (a:Restaurant),(b:City) WHERE a.name = "Zushi Zam" AND b.name = "New York" CREATE (a)-[r:IS_IN]->(b) RETURN r;
+-- iSushi is in New York
+MATCH (a:Restaurant),(b:City) WHERE a.name = "iSushi" AND b.name = "New York" CREATE (a)-[r:IS_IN]->(b) RETURN r;
+
+-- show all nodes
+MATCH (n) RETURN n;
+
+-- show all philip's friends that likes a Restaurant that serves Sushi
+MATCH (p:Person)-[:IS_FRIEND_OF]->(f:Person)-[:LIKES]->(r:Restaurant)-[:SERVES]->(d:Dish {cuisine: "Sushi"}) WHERE p.name = "Philip" RETURN f;
+
+--show all restaurants which's names contains “ushi”
+MATCH (r:Restaurant) WHERE r.name CONTAINS "ushi" RETURN r;
+
+--show all restaurants that serves “Sushi”
+MATCH (r:Restaurant)-[:SERVES]->(d:Dish {cuisine: "Sushi"}) RETURN r;
+
+--Add a new restaurant that is in "New York". Choose the name of the restaurant and the specialty it serves. CREATE the restaurant and then merge it with the city and Dish
+CREATE (res:Restaurant {name: "Sushi Sushi"})
+WITH res
+MATCH (res:Restaurant {name: "Sushi Sushi"}), (ci:City {name: "New York"}), (di:Dish {cuisine: "Sushi"})
+MERGE (res)-[:IS_IN]->(ci)
+MERGE (res)-[:SERVES]->(di)
+RETURN res, ci, di;
+
+--Modify the name of the restaurant "Zushi Zam" to "Zushi"
+MATCH (res:Restaurant {name: "Zushi Zam"}) SET res.name = "Zushi" RETURN res;
+
+--Add the property “country” with the value USA to the node “New York”
+MATCH (ci:City {name: "New York"}) SET ci.country = "USA" RETURN ci;
+
+--add a new specialty "Sashimi" to the restaurants that Philip's friends like that serve "Sushi" and are located in "New York".You have to create the new Dish and merge it with the restaurants
+CREATE (di:Dish {cuisine: "Sashimi"})
+WITH di
+MATCH (p:Person)-[:IS_FRIEND_OF]->(f:Person)-[:LIKES]->(r:Restaurant)-[:SERVES]->(d:Dish {cuisine: "Sushi"}),(r)-[:IS_IN]->(ci:City {name: "New York"})
+WHERE p.name = "Philip"
+MERGE (r)-[:SERVES]->(di)
+RETURN r, di;
+
+--show from "Philip" the nodes that are up to three jumps away.
+MATCH (p:Person {name: "Philip"})-[*..3]-(n) RETURN n;
+
+--Borra únicamente el nodo “New York” y sus relaciones.
+MATCH (ci:City {name: "New York"}) DETACH DELETE ci;
+
+-- Delete all nodes and relationships
+MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r;
